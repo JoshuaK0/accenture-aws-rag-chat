@@ -15,7 +15,7 @@
       "function": {
         "accentureraginvokebedrock": {
           "deploymentBucketName": "amplify-accentureawsragchat-main-4d480-deployment",
-          "s3Key": "amplify-builds/accentureraginvokebedrock-643731686e4a67786339-build.zip",
+          "s3Key": "amplify-builds/accentureraginvokebedrock-774f586a7a5a4d39426a-build.zip",
           "knowledgeBaseArn": "arn:aws:aoss:eu-west-1:900808296174:collection/05wamwwwnb61hfdo2icj"
         }
       },
