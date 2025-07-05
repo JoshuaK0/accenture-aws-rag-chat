@@ -1,4 +1,25 @@
 {
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-accentureawsragchat-main-4d480-authRole",
+      "UnauthRoleArn": "arn:aws:iam::900808296174:role/amplify-accentureawsragchat-main-4d480-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::900808296174:role/amplify-accentureawsragchat-main-4d480-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-accentureawsragchat-main-4d480-deployment",
+      "UnauthRoleName": "amplify-accentureawsragchat-main-4d480-unauthRole",
+      "StackName": "amplify-accentureawsragchat-main-4d480",
+      "StackId": "arn:aws:cloudformation:eu-west-1:900808296174:stack/amplify-accentureawsragchat-main-4d480/e3519df0-59cd-11f0-ba32-0607c7058b23",
+      "AmplifyAppId": "d21wh3yl4q77z"
+    },
+    "categories": {
+      "function": {
+        "accentureraginvokebedrock": {
+          "deploymentBucketName": "amplify-accentureawsragchat-main-4d480-deployment",
+          "s3Key": "amplify-builds/accentureraginvokebedrock-454a35767a7447786263-build.zip"
+        }
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-accentureawsragchat-dev-a3ddd-authRole",
