@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bedrock KB on Amplify</title>
+    <style>
+      body {
+        max-width: 600px;
+        margin: 2rem auto;
+        font-family: sans-serif;
+      }
+      textarea,
+      button {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+      #answer {
+        white-space: pre-wrap;
+        background: #f9f9f9;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ask the Knowledge Base</h1>
+    <textarea id="prompt" rows="4" placeholder="Type your question…"></textarea>
+    <button id="send">Send</button>
+    <div id="answer"></div>
+
+    <!-- 1) import Amplify libraries from CDN -->
+    <script src="https://unpkg.com/aws-amplify@5/dist/aws-amplify.min.js"></script>
+    <script>
+      // 2) configure Amplify with your deployed resources
+      Amplify.configure({
+        API: {
+          endpoints: [
+            {
+              name: "bedrockApi",
+              endpoint: "https://xyz.execute-api.us-east-1.amazonaws.com/dev", // ← your API URL
+            },
+          ],
+        },
+      });
+
+      document.getElementById("send").onclick = async () => {
+        const prompt = document.getElementById("prompt").value.trim();
+        if (!prompt) return;
+        const ansEl = document.getElementById("answer");
+        ansEl.textContent = "Loading…";
+
+        try {
+          const res = await Amplify.API.post("bedrockApi", "/query", {
+            body: { prompt },
+          });
+          ansEl.textContent = res.answer;
+        } catch (err) {
+          console.error(err);
+          ansEl.textContent = "Error querying knowledge base";
+        }
+      };
+    </script>
+  </body>
+</html>
