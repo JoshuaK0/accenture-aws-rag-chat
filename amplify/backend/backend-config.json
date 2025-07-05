@@ -31,6 +31,14 @@
         }
       ]
     },
+    "AMPLIFY_function_accentureraginvokebedrock_knowledgeBaseArn": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "accentureraginvokebedrock"
+        }
+      ]
+    },
     "AMPLIFY_function_accentureraginvokebedrock_s3Key": {
       "usedBy": [
         {

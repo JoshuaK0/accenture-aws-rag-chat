@@ -15,6 +15,9 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "knowledgeBaseArn": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -69,6 +72,9 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "KNOWLEDGE_BASE_ARN": {
+              "Ref": "knowledgeBaseArn"
             }
           }
         },

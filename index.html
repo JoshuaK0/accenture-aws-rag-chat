@@ -24,7 +24,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
-        max-width: 480px;
+        max-width: 600px;
         margin: auto;
         height: 100%;
         padding: 1rem;
@@ -90,6 +90,25 @@
         word-break: break-word;
         min-height: 4rem;
       }
+      .citations {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: #fff;
+        border-radius: 0.375rem;
+        border: 1px solid #e2e8f0;
+      }
+      .citations h2 {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        color: #2d3748;
+      }
+      .citations ul {
+        list-style: decimal inside;
+      }
+      .citations li {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
     </style>
   </head>
   <body>
@@ -108,10 +127,14 @@
         <button type="submit">Send</button>
       </form>
       <pre id="response"></pre>
+      <div id="citations" class="citations" style="display: none">
+        <h2>Sources used:</h2>
+        <ul id="cit-list"></ul>
+      </div>
     </div>
 
     <script>
-      // <-- point this at your actual API + path -->
+      // ← Replace with your real endpoint
       const apiUrl =
         "https://r07rc9h4s8.execute-api.eu-west-1.amazonaws.com/main/query";
 
@@ -120,32 +143,55 @@
         .addEventListener("submit", async (e) => {
           e.preventDefault();
           const inputEl = document.getElementById("kb-input");
-          const respEl = document.getElementById("response");
+          const respPre = document.getElementById("response");
+          const citDiv = document.getElementById("citations");
+          const citList = document.getElementById("cit-list");
           const prompt = inputEl.value.trim();
 
+          // Clear previous
+          respPre.textContent = "";
+          citDiv.style.display = "none";
+          citList.innerHTML = "";
+
           if (!prompt) {
-            respEl.textContent = "Please enter a question.";
+            respPre.textContent = "Please enter a question.";
             return;
           }
 
-          respEl.textContent = "Loading…";
+          respPre.textContent = "Loading…";
 
           try {
-            const r = await fetch(apiUrl, {
+            const res = await fetch(apiUrl, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ prompt }),
             });
-            const data = await r.json();
+            const data = await res.json();
+
             if (data.error) {
-              respEl.textContent = "Error: " + data.error;
-            } else {
-              respEl.textContent =
-                data.answer || data.reply || JSON.stringify(data);
+              respPre.textContent = "Error: " + data.error;
+              return;
+            }
+
+            // Show answer
+            respPre.textContent = data.answer || data.completion || "";
+
+            // Show citations if present
+            const citations = data.citations;
+            if (Array.isArray(citations) && citations.length > 0) {
+              citations.forEach((c) => {
+                const li = document.createElement("li");
+                const title = c.title
+                  ? `${c.title} (${c.documentId})`
+                  : c.documentId;
+                li.textContent = title + (c.snippet ? ` — ${c.snippet}` : "");
+                citList.appendChild(li);
+              });
+              citDiv.style.display = "block";
             }
           } catch (err) {
             console.error(err);
-            respEl.textContent = "Fetch error: " + err.message;
+            respPre.textContent = "Fetch error: " + err.message;
           }
         });
     </script>
